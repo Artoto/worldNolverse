@@ -12,68 +12,17 @@ import Link from "next/link";
 const allProducts = [
   {
     id: "p1",
-    title: "นิยายรักแรกพบ",
-    author: "อับดุล",
-    cover: "/covers/cover1.jpg",
-    description: "เรื่องราวความรักสุดโรแมนติกที่เริ่มต้นจากความบังเอิญ",
-    category: "Romantic",
-    slug: "love-at-first-sight",
-  },
-  {
-    id: "p2",
-    title: "ผจญภัยในโลกเวทมนตร์",
-    author: "ลูกศิษย์คนเก่ง",
-    cover: "/covers/cover2.jpg",
-    description: "การเดินทางของเด็กหนุ่มที่ค้นพบพลังวิเศษ",
-    category: "Fantasy",
-    slug: "magic-world-adventure",
-  },
-  {
-    id: "p3",
-    title: "สืบสวนคดีปริศนา",
-    author: "ยอดนักสืบ",
-    cover: "/covers/cover3.jpg",
-    description: "คดีฆาตกรรมซ่อนเงื่อนที่ต้องใช้ไหวพริบคลี่คลาย",
-    category: "Mystery",
-    slug: "mystery-case",
-  },
-  {
-    id: "p4",
-    title: "เมื่อโลกหยุดหมุน",
-    author: "นักเขียนเงา",
-    cover: "/covers/cover4.jpg",
-    description: "เรื่องราวไซไฟสุดล้ำกับการเอาชีวิตรอดในโลกที่หยุดนิ่ง",
-    category: "Sci-Fi",
-    slug: "world-stopped",
-  },
-  {
-    id: "p5",
-    title: "ชีวิตในรั้วโรงเรียน",
-    author: "น้องใหม่",
-    cover: "/covers/cover5.jpg",
-    description: "เรื่องราวชีวิตนักเรียนที่เต็มไปด้วยความฝันและมิตรภาพ",
-    category: "Slice of Life",
-    slug: "school-life",
-  },
-  {
-    id: "p6",
-    title: "การเดินทางข้ามมิติ",
-    author: "ผู้หลงทาง",
-    cover: "/covers/cover6.jpg",
-    description: "เปิดประตูสู่โลกที่ไม่เคยเห็น การผจญภัยครั้งใหม่เริ่มต้นขึ้น",
-    category: "Fantasy",
-    slug: "dimension-travel",
+    title: "ตะลุยพิภพเทียนเยวียน",
+    cover: "/img/S__9265156.jpg",
+    description:
+      "หลี่ เฟยหรง นักมวยหนุ่มอนาคตไกล ชีวิตกำลังรุ่งโรจน์ แต่แล้วกลับถูกรถชนตายเพราะช่วยเด็ก ทำให้วิญญาณเขาทะลุมิติไปยังโลกยุทธภพที่ผู้คนให้ความสำคัญกับความแข็งแกร่ง แต่เขากลับได้อยู่ในร่างขององค์ชายไร้ค่า",
+    category: "Erotic",
+    slug: "exploring-the-heavenly-world",
+    episodes: 21,
   },
 ];
 
-const categoriesList = [
-  "ทั้งหมด",
-  "Romantic",
-  "Fantasy",
-  "Mystery",
-  "Sci-Fi",
-  "Slice of Life",
-]; // หมวดหมู่ทั้งหมด
+const categoriesList = ["ทั้งหมด", "Erotic", "Fantasy", "Mystery", "Sci-Fi"]; // หมวดหมู่ทั้งหมด
 
 export default function CategoriesPage() {
   const router = useRouter();
@@ -94,9 +43,9 @@ export default function CategoriesPage() {
 
   // กรองสินค้าตาม Search Term และ Category
   const filteredProducts = allProducts.filter((product) => {
-    const matchesSearch =
-      product.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      product.author.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSearch = product.title
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
     const matchesCategory =
       selectedCategory === "ทั้งหมด" || product.category === selectedCategory;
     return matchesSearch && matchesCategory;

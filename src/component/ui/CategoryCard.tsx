@@ -4,6 +4,8 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
+import { themes } from "@/lib/Theme";
+import { useTheme } from "@/component/modals/ThemeProvider";
 
 interface CategoryCardProps {
   category: {
@@ -15,9 +17,13 @@ interface CategoryCardProps {
 }
 
 const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
+  const { activeTheme } = useTheme();
+  const colors =
+    themes[activeTheme as keyof typeof themes]?.colors || themes.light.colors;
+
   return (
     <motion.div
-      className="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center justify-center text-center cursor-pointer border border-gray-100"
+      className={`${colors.cardBg} rounded-lg shadow-lg p-6 flex flex-col items-center justify-center text-center cursor-pointer border ${colors.border}`}
       whileHover={{ scale: 1.05, boxShadow: "0px 10px 20px rgba(0,0,0,0.1)" }}
       transition={{ type: "spring", stiffness: 300, damping: 10 }}
     >
@@ -39,10 +45,10 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
             // ถ้า icon เป็น Emoji
             <div className="text-5xl mb-4">{category.icon}</div>
           )}
-          <h3 className="text-xl font-bold text-gray-800 mb-2">
+          <h3 className={`text-xl font-bold ${colors.text} mb-2`}>
             {category.name}
           </h3>
-          <p className="text-sm text-gray-600">
+          <p className={`text-sm ${colors.textSecondary}`}>
             {category.products.length} นิยาย
           </p>
         </div>

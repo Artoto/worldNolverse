@@ -2,24 +2,22 @@
 "use client"; // เป็น Client Component เพราะมี interactive animations
 
 import { motion, Variants } from "framer-motion";
-import Image from "next/image";
 import Link from "next/link";
-import ProductCard from "@/component/ui/ProductCard";
 import CategoryCard from "@/component/ui/CategoryCard";
-import Navbar from "@/component/layout/Navbar"; // ใช้ Navbar ที่สร้างไว้
-import { title } from "process";
+import Navbar from "@/component/layout/Navbar";
 import Carousel from "../component/ui/Carousel";
+import { themes } from "@/lib/Theme";
+import { useTheme } from "@/component/modals/ThemeProvider";
 
 // ข้อมูลจำลอง (ในโลกจริงจะมาจาก API)
 const heroProducts = [
   {
     id: "h1",
-    title: "นิยายรักแรกพบ",
-    author: "อับดุล",
+    title: "ตะลุยพิภพเทียนเยวียน",
     cover: "/img/books.png",
     description: "เรื่องราวความรักสุดโรแมนติกที่เริ่มต้นจากความบังเอิญ",
     slug: "love-at-first-sight",
-    category: "Romantic",
+    category: "Erotic",
     specifications: {
       episodes: {
         title: "รวมตอน",
@@ -31,53 +29,7 @@ const heroProducts = [
       },
       category: {
         title: "หมวดหมู่",
-        data: "Romance",
-      },
-    },
-  },
-  {
-    id: "h2",
-    title: "ผจญภัยในโลกเวทมนตร์",
-    author: "ลูกศิษย์คนเก่ง",
-    cover: "/img/books.png",
-    description: "การเดินทางของเด็กหนุ่มที่ค้นพบพลังวิเศษ",
-    slug: "magic-world-adventure",
-    category: "Fantasy",
-    specifications: {
-      episodes: {
-        title: "รวมตอน",
-        data: "50 ตอน",
-      },
-      price: {
-        title: "ราคา",
-        data: "2,000 บาท",
-      },
-      category: {
-        title: "หมวดหมู่",
-        data: "Romance",
-      },
-    },
-  },
-  {
-    id: "h3",
-    title: "สืบสวนคดีปริศนา",
-    author: "ยอดนักสืบ",
-    cover: "/img/books.png",
-    description: "คดีฆาตกรรมซ่อนเงื่อนที่ต้องใช้ไหวพริบคลี่คลาย",
-    slug: "mystery-case",
-    category: "Mystery",
-    specifications: {
-      episodes: {
-        title: "รวมตอน",
-        data: "50 ตอน",
-      },
-      price: {
-        title: "ราคา",
-        data: "2,000 บาท",
-      },
-      category: {
-        title: "หมวดหมู่",
-        data: "Romance",
+        data: "Erotic",
       },
     },
   },
@@ -87,34 +39,31 @@ const categoriesData = [
   {
     id: "c1",
     name: "แฟนตาซี",
+    category: "Fantasy",
     icon: "✨",
     products: heroProducts.filter((p) => p.category === "Fantasy").slice(0, 2),
   },
   {
     id: "c2",
     name: "โรแมนติก",
+    category: "Erotic",
     icon: "❤️",
-    products: heroProducts.filter((p) => p.category === "Romantic").slice(0, 2),
+    products: heroProducts.filter((p) => p.category === "Erotic").slice(0, 2),
   },
   {
     id: "c3",
     name: "สืบสวน",
+    category: "Mystery",
     icon: "🔍",
     products: heroProducts.filter((p) => p.category === "Mystery").slice(0, 2),
   },
-  { id: "c4", name: "ไซไฟ", icon: "🚀", products: [] }, // ตัวอย่างหมวดที่ยังไม่มีนิยายใน hero
+  { id: "c4", name: "ไซไฟ", category: "Sci-Fi", icon: "🚀", products: [] }, // ตัวอย่างหมวดที่ยังไม่มีนิยายใน hero
 ];
 
 export default function HomePage() {
-  const heroContainerVariants = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.5, // ให้แต่ละ Hero Item ค่อยๆ โผล่มา
-      },
-    },
-  };
+  const { activeTheme } = useTheme();
+  const colors =
+    themes[activeTheme as keyof typeof themes]?.colors || themes.light.colors;
 
   const categoryContainerVariants = {
     hidden: { opacity: 0 },
@@ -136,7 +85,7 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className={`min-h-screen ${colors.bg}`}>
       <Navbar />
 
       {/* Section 1: Hero Sliding Product */}
@@ -145,10 +94,12 @@ export default function HomePage() {
       </div>
 
       {/* Section 2: หมวดหมู่ของ Product */}
-      <section className="py-12 md:py-20 px-4 md:px-8 bg-white flex  justify-center items-center">
+      <section
+        className={`py-12 md:py-20 px-4 md:px-8 ${colors.cardBg} flex  justify-center items-center`}
+      >
         <div className="flex flex-col justify-center items-center gap-5 max-w-7xl w-full">
           <motion.h2
-            className="text-3xl md:text-4xl font-bold text-gray-800  text-center"
+            className={`text-3xl md:text-4xl font-bold ${colors.text} text-center`}
             initial={{ opacity: 0, y: -20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.5 }}
@@ -173,7 +124,7 @@ export default function HomePage() {
           <div className="text-center mt-16">
             <Link href="/categories" passHref>
               <motion.span
-                className="inline-block px-10 py-5 bg-purple-600 text-white rounded-full font-bold text-xl shadow-lg hover:bg-purple-700 transition-colors"
+                className={`inline-block px-10 py-5 ${colors.button} ${colors.textButton} border ${colors.border} rounded-full font-bold text-xl shadow-lg transition-colors`}
                 whileHover={{
                   scale: 1.05,
                   boxShadow: "0px 10px 20px rgba(0,0,0,0.15)",
@@ -195,8 +146,11 @@ export default function HomePage() {
       </section>
 
       {/* Footer (สร้างเป็น Component แยกได้เช่นกัน) */}
-      <footer className="p-6 bg-gray-800 text-white text-center ">
-        &copy; {new Date().getFullYear()} NovelVerse by อับดุล & ลูกศิษย์คนเก่ง
+      <footer
+        className={`p-6 ${colors.cardBg} ${colors.text} border-t ${colors.border} text-center`}
+      >
+        &copy; {new Date().getFullYear()} worldNolverse by Arthit All Rights
+        Reserved.
       </footer>
     </div>
   );
