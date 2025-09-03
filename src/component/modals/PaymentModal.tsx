@@ -9,8 +9,6 @@ interface PaymentModalProps {
   isOpen: boolean;
   onClose: () => void;
   chapterTitle: string;
-  price: number;
-  userCoins: number;
   onConfirm: () => void;
 }
 
@@ -18,8 +16,6 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
   isOpen,
   onClose,
   chapterTitle,
-  price,
-  userCoins,
   onConfirm,
 }) => {
   const modalVariants: Variants = {
@@ -57,43 +53,18 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
             onClick={(e) => e.stopPropagation()} // ป้องกัน event bubbling
           >
             <h2 className="text-2xl font-bold text-gray-900 mb-4">
-              ปลดล็อค {chapterTitle}
+              เนื่องจาก {chapterTitle}
             </h2>
-            <p className="text-gray-700 mb-2">
-              บทนี้ต้องใช้{" "}
-              <span className="font-bold text-purple-600">{price}</span> เหรียญ
-            </p>
-            <p className="text-gray-700 mb-6">
-              เหรียญคงเหลือ:{" "}
-              <span className="font-bold text-green-600">{userCoins}</span>{" "}
-              เหรียญ
-            </p>
+            <p className="text-gray-700 mb-2">มีค่าใช้จ่ายในการเข้าถึง</p>
 
-            {userCoins >= price ? (
-              <motion.button
-                onClick={onConfirm}
-                className="w-full px-6 py-3 bg-purple-600 text-white rounded-lg font-bold text-lg hover:bg-purple-700 transition-colors"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                ยืนยันการปลดล็อค
-              </motion.button>
-            ) : (
-              <div>
-                <p className="text-red-500 font-semibold mb-4">
-                  เหรียญไม่พอ กรุณาเติมเงิน
-                </p>
-                <Link href="/profile" legacyBehavior>
-                  <motion.a
-                    className="inline-block w-full px-6 py-3 bg-blue-500 text-white rounded-lg font-bold text-lg hover:bg-blue-600 transition-colors"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    ไปหน้าเติมเงิน
-                  </motion.a>
-                </Link>
-              </div>
-            )}
+            <motion.button
+              onClick={onConfirm}
+              className="w-full px-6 py-3 bg-purple-600 text-white rounded-lg font-bold text-lg hover:bg-purple-700 transition-colors"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              ไปที่ readawrite
+            </motion.button>
 
             <button
               onClick={onClose}

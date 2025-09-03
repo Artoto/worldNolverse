@@ -12,6 +12,7 @@ interface CategoryCardProps {
     id: string;
     name: string;
     icon: string; // อาจจะเป็น Emoji หรือ URL รูปภาพ
+    category: string;
     products: { id: string; title: string; cover: string }[]; // ตัวอย่างนิยายในหมวด
   };
 }
@@ -28,7 +29,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
       transition={{ type: "spring", stiffness: 300, damping: 10 }}
     >
       <Link
-        href={`/categories?cat=${encodeURIComponent(category.name)}`}
+        href={`/categories?cat=${encodeURIComponent(category.category)}`}
         passHref
       >
         <div className="block w-full">

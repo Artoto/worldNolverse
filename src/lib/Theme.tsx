@@ -61,7 +61,7 @@ export const themes = {
     icon: Eye,
     colors: {
       bg: "bg-yellow-50",
-      cardBg: "bg-yellow-50",
+      cardBg: "bg-white",
       text: "text-gray-900",
       textSecondary: "text-gray-500",
       border: "border-gray-300",

@@ -7,24 +7,15 @@ import ProductCard from "@/component/ui/ProductCard";
 import Navbar from "@/component/layout/Navbar";
 import { useRouter, useSearchParams } from "next/navigation"; // ใช้ hook จาก Next.js 13+
 import Link from "next/link";
-
-// ข้อมูลจำลองนิยายทั้งหมด (ในโลกจริงจะดึงจาก API)
-const allProducts = [
-  {
-    id: "p1",
-    title: "ตะลุยพิภพเทียนเยวียน",
-    cover: "/img/S__9265156.jpg",
-    description:
-      "หลี่ เฟยหรง นักมวยหนุ่มอนาคตไกล ชีวิตกำลังรุ่งโรจน์ แต่แล้วกลับถูกรถชนตายเพราะช่วยเด็ก ทำให้วิญญาณเขาทะลุมิติไปยังโลกยุทธภพที่ผู้คนให้ความสำคัญกับความแข็งแกร่ง แต่เขากลับได้อยู่ในร่างขององค์ชายไร้ค่า",
-    category: "Erotic",
-    slug: "exploring-the-heavenly-world",
-    episodes: 21,
-  },
-];
-
-const categoriesList = ["ทั้งหมด", "Erotic", "Fantasy", "Mystery", "Sci-Fi"]; // หมวดหมู่ทั้งหมด
+import { themes } from "@/lib/Theme";
+import { useTheme } from "@/component/modals/ThemeProvider";
+import { allProducts, categoriesList } from "@/lib/Data";
 
 export default function CategoriesPage() {
+  const { activeTheme } = useTheme();
+  const colors =
+    themes[activeTheme as keyof typeof themes]?.colors || themes.light.colors;
+
   const router = useRouter();
   const searchParams = useSearchParams();
   const initialCategory = searchParams.get("cat") || "ทั้งหมด";
@@ -87,12 +78,12 @@ export default function CategoriesPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className={`min-h-screen ${colors.bg}`}>
       <Navbar />
 
-      <div className="container mx-auto py-12 px-4">
+      <div className="container mx-auto py-12 px-4 max-w-4xl w-full">
         <motion.h1
-          className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-8 text-center"
+          className={`text-3xl md:text-4xl font-extrabold ${colors.text} mb-8 text-center`}
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -102,7 +93,7 @@ export default function CategoriesPage() {
 
         {/* Search and Filter */}
         <motion.div
-          className="mb-10 flex flex-col md:flex-row gap-4 items-center justify-center p-4 bg-white rounded-xl shadow-sm"
+          className={`mb-10 flex flex-col md:flex-row gap-4 items-center justify-center p-4 border-b b border-solid ${colors.border}`}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.6 }}
@@ -110,12 +101,12 @@ export default function CategoriesPage() {
           <input
             type="text"
             placeholder="ค้นหานิยาย หรือนักเขียน..."
-            className="p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 w-full md:w-1/2 text-gray-700"
+            className={`p-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 w-full md:w-1/2 ${colors.border} ${colors.text}`}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
           <select
-            className="p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 w-full md:w-auto bg-white text-gray-700"
+            className={`p-3 border ${colors.border} rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 w-full md:w-auto ${colors.cardBg} ${colors.text}`}
             value={selectedCategory}
             onChange={(e) => handleCategoryChange(e.target.value)}
           >
@@ -130,7 +121,7 @@ export default function CategoriesPage() {
         {/* Product List */}
         {currentProducts.length === 0 ? (
           <motion.div
-            className="text-center text-xl text-gray-600 py-10"
+            className={`text-center text-xl ${colors.text} py-10`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
@@ -139,7 +130,7 @@ export default function CategoriesPage() {
           </motion.div>
         ) : (
           <motion.div
-            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"
+            className="grid grid-cols-1 sm:grid-cols-2 gap-4"
             variants={containerVariants}
             initial="hidden"
             animate="show"

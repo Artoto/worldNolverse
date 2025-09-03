@@ -1,8 +1,11 @@
 // components/ui/ReadingView.tsx
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
+import { themes } from "@/lib/Theme";
+import { useTheme } from "../modals/ThemeProvider";
+import { getChapterContent } from "@/lib/Chapters";
 
 interface ReadingViewProps {
   chapter: {
@@ -19,20 +22,56 @@ const ReadingView: React.FC<ReadingViewProps> = ({
   productTitle,
   onClose,
 }) => {
+  const { activeTheme } = useTheme();
+  const colors =
+    themes[activeTheme as keyof typeof themes]?.colors || themes.light.colors;
+  const [readingChapter, setReadingChapter] = useState<string | null>(null);
   // useEffect สำหรับป้องกันการคัดลอกและคลิกขวา
   useEffect(() => {
+    handleReadChapter(chapter);
     const handleSelectStart = (e: Event) => e.preventDefault();
     const handleContextMenu = (e: Event) => e.preventDefault();
 
     document.addEventListener("selectstart", handleSelectStart);
     document.addEventListener("contextmenu", handleContextMenu);
 
+    window.addEventListener("resize", checkDevTools);
+    window.addEventListener("load", checkDevTools);
     // Clean up event listeners เมื่อ Component ถูก unmount
     return () => {
       document.removeEventListener("selectstart", handleSelectStart);
       document.removeEventListener("contextmenu", handleContextMenu);
     };
-  }, []);
+  }, [chapter]);
+
+  const checkDevTools = () => {
+    // Check for both width and height differences
+    if (
+      window.outerWidth - window.innerWidth > 100 ||
+      window.outerHeight - window.innerHeight > 100
+    ) {
+      document.body.innerHTML = "<h1>การเข้าถึงไม่ได้รับอนุญาต!</h1>";
+    }
+  };
+
+  const handleReadChapter = async (chapter: {
+    id: number;
+    title: string;
+    content: string;
+  }) => {
+    try {
+      // const res = await fetch(chapter.content); // ดึงจากไฟล์ JSON
+      // if (!res.ok) throw new Error("ไม่สามารถโหลดเนื้อหาได้");
+      // const data = await res.text();
+      // setReadingChapter(data);
+
+      const chapterContent = await getChapterContent(chapter.content);
+      setReadingChapter(chapterContent);
+    } catch (err) {
+      console.error(err);
+      alert("เกิดข้อผิดพลาดในการโหลดบท");
+    }
+  };
 
   const slideInVariants: Variants = {
     hidden: { y: "100vh", opacity: 0 },
@@ -47,7 +86,7 @@ const ReadingView: React.FC<ReadingViewProps> = ({
   return (
     <AnimatePresence>
       <motion.div
-        className="fixed inset-0 bg-white z-[90] overflow-y-auto p-4 md:p-8"
+        className={`fixed inset-0 ${colors.bg} z-[90] overflow-y-auto p-4 md:p-8`}
         variants={slideInVariants}
         initial="hidden"
         animate="visible"
@@ -56,7 +95,7 @@ const ReadingView: React.FC<ReadingViewProps> = ({
         <div className="max-w-4xl mx-auto py-8">
           <motion.button
             onClick={onClose}
-            className="text-blue-600 hover:underline flex items-center mb-6"
+            className={`hover:underline flex items-center mb-6 ${colors.text}`}
             whileHover={{ x: -5 }}
             whileTap={{ scale: 0.95 }}
           >
@@ -76,45 +115,22 @@ const ReadingView: React.FC<ReadingViewProps> = ({
           </motion.button>
 
           <motion.h1
-            className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-3"
+            className={`text-3xl md:text-4xl font-extrabold ${colors.text} mb-3`}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1, duration: 0.5 }}
           >
             {productTitle} - {chapter.title}
           </motion.h1>
-
           <motion.div
-            className="prose lg:prose-xl text-gray-800 leading-relaxed mt-8 p-4 md:p-6 bg-gray-50 rounded-lg shadow-inner"
-            style={{ userSelect: "none" }} // สไตล์นี้จะป้องกันการเลือกข้อความได้ดีขึ้น
+            className={`text-3xl prose lg:prose-xl ${colors.text} leading-relaxed mt-8 p-4 md:p-6 ${colors.cardBg} rounded-lg shadow-inner max-w-6xl w-full `}
+            style={{ userSelect: "none" }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.6 }}
           >
-            {/* ในโลกจริง เนื้อหาควรถูก sanitize เพื่อป้องกัน XSS */}
-            <p>{chapter.content}</p>
-            <br />
-            <p>
-              นี่คือเนื้อหาจำลองของบทที่ {chapter.id} ของนิยาย {productTitle}
-            </p>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
-            </p>
-            <p>
-              Duis aute irure dolor in reprehenderit in voluptate velit esse
-              cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-              cupidatat non proident, sunt in culpa qui officia deserunt mollit
-              anim id est laborum.
-            </p>
-            <p>
-              Curabitur pretium tincidunt lacus. Nulla gravida orci a odio.
-              Nullam varius, turpis et commodo pharetra, est eros bibendum elit,
-              nec luctus magna felis sit amet lectus. Vestibulum ante ipsum
-              primis in faucibus orci luctus et ultrices posuere cubilia Curae;
-              Morbi lacinia molestie dui. Praesent blandit dolor eu enim.
+            <p className="whitespace-pre-wrap break-words">
+              {!readingChapter ? "ไม่พบไฟล์." : readingChapter}
             </p>
           </motion.div>
         </div>

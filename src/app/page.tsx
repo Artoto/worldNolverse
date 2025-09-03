@@ -8,57 +8,7 @@ import Navbar from "@/component/layout/Navbar";
 import Carousel from "../component/ui/Carousel";
 import { themes } from "@/lib/Theme";
 import { useTheme } from "@/component/modals/ThemeProvider";
-
-// ข้อมูลจำลอง (ในโลกจริงจะมาจาก API)
-const heroProducts = [
-  {
-    id: "h1",
-    title: "ตะลุยพิภพเทียนเยวียน",
-    cover: "/img/books.png",
-    description: "เรื่องราวความรักสุดโรแมนติกที่เริ่มต้นจากความบังเอิญ",
-    slug: "love-at-first-sight",
-    category: "Erotic",
-    specifications: {
-      episodes: {
-        title: "รวมตอน",
-        data: "50 ตอน",
-      },
-      price: {
-        title: "ราคา",
-        data: "2,000 บาท",
-      },
-      category: {
-        title: "หมวดหมู่",
-        data: "Erotic",
-      },
-    },
-  },
-];
-
-const categoriesData = [
-  {
-    id: "c1",
-    name: "แฟนตาซี",
-    category: "Fantasy",
-    icon: "✨",
-    products: heroProducts.filter((p) => p.category === "Fantasy").slice(0, 2),
-  },
-  {
-    id: "c2",
-    name: "โรแมนติก",
-    category: "Erotic",
-    icon: "❤️",
-    products: heroProducts.filter((p) => p.category === "Erotic").slice(0, 2),
-  },
-  {
-    id: "c3",
-    name: "สืบสวน",
-    category: "Mystery",
-    icon: "🔍",
-    products: heroProducts.filter((p) => p.category === "Mystery").slice(0, 2),
-  },
-  { id: "c4", name: "ไซไฟ", category: "Sci-Fi", icon: "🚀", products: [] }, // ตัวอย่างหมวดที่ยังไม่มีนิยายใน hero
-];
+import { heroProducts, categoriesData } from "@/lib/Data";
 
 export default function HomePage() {
   const { activeTheme } = useTheme();

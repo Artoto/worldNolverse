@@ -14,9 +14,10 @@ const Navbar: React.FC = () => {
   const colors =
     themes[activeTheme as keyof typeof themes]?.colors || themes.light.colors;
   const pathName = usePathname();
+
   return (
     <motion.nav
-      className="bg-transparent backdrop-blur-lg backdrop-saturate-100 p-0 md:p-4 sticky top-0 z-50"
+      className="bg-transparent backdrop-blur-lg backdrop-saturate-100 p-0 md:p-4 sticky top-0 z-50 w-full"
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ type: "spring", stiffness: 100, damping: 10 }}
@@ -77,8 +78,12 @@ const Navbar: React.FC = () => {
         >
           <Link href="/" passHref>
             <motion.span
-              className={`font-semibold text-lg ${colors.textNavbar} ${
-                pathName === "/" ? "!text-purple-600" : ""
+              className={`font-semibold text-lg  ${
+                pathName === "/"
+                  ? "!text-purple-600"
+                  : pathName === "/categories"
+                  ? "!text-purple-600"
+                  : `${colors.textNavbar}`
               }`}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
