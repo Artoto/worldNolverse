@@ -2,8 +2,57 @@ const heroProducts = [
   {
     id: "h1",
     title: "ตะลุยพิภพเทียนเยวียน",
-    cover: "/img/books.png",
+    coverBg: "/img/books.png",
+    cover: "/img/S__9265156.jpg",
     description: "เรื่องราวความรักสุดโรแมนติกที่เริ่มต้นจากความบังเอิญ",
+    slug: "exploring-the-heavenly-world",
+    category: "Erotic",
+    specifications: {
+      episodes: {
+        title: "รวมตอน",
+        data: "50 ตอน",
+      },
+      price: {
+        title: "ราคา",
+        data: "2,000 บาท",
+      },
+      category: {
+        title: "หมวดหมู่",
+        data: "Erotic",
+      },
+    },
+  },
+  {
+    id: "h2",
+    title: "ตะลุยพิภพเทียนเยวียน2",
+    coverBg: "/img/books.png",
+    cover: "/img/S__9265156.jpg",
+    description: "เรื่องราวความรักสุดโรแมนติกที่เริ่มต้นจากความบังเอิญ",
+    slug: "exploring-the-heavenly-world",
+    category: "Erotic",
+    specifications: {
+      episodes: {
+        title: "รวมตอน",
+        data: "50 ตอน",
+      },
+      price: {
+        title: "ราคา",
+        data: "2,000 บาท",
+      },
+      category: {
+        title: "หมวดหมู่",
+        data: "Erotic",
+      },
+    },
+  },
+  {
+    id: "h3",
+    title:
+      "ตะลุยพิภพเทียนเยวียน3ตะลุยพิภพเทียนเยวียน3ตะลุยพิภพเทียนเยวียน3ตะลุยพิภพเทียนเยวียน3ตะลุยพิภพเทียนเยวียน3ตะลุยพิภพเทียนเยวียน3ตะลุยพิภพเทียนเยวียน3ตะลุยพิภพเทียนเยวียน3ตะลุยพิภพเทียนเยวียน3ตะลุยพิภพเทียนเยวียน3",
+    coverBg: "/img/books.png",
+    cover: "/img/S__9265156.jpg",
+    description:
+      "เรื่องราวความรักสุดโรแมนติกที่เริ่มต้นจากความบังเอิญเรื่องราวความรักสุดโรแมนติกที่เริ่มต้นจากความบังเอิญเรื่องราวความรักสุดโรแมนติกที่เริ่มต้นจากความบังเอิญเรื่องราวความรักสุดโรแมนติกที่เริ่มต้นจากความบังเอิญ",
     slug: "exploring-the-heavenly-world",
     category: "Erotic",
     specifications: {

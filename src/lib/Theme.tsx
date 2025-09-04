@@ -17,6 +17,7 @@ export const themes = {
       textSee: "text-gray-900",
       shadow: "shadow-sm",
       textNavbar: "text-gray-900 hover:text-purple-600 transition-colors",
+      textSelect: "text-gray-900 hover:bg-blue-600 hover:text-white",
     },
   },
   dark: {
@@ -35,6 +36,7 @@ export const themes = {
       textSee: "text-white hover:text-gray-900",
       shadow: "shadow-lg shadow-black/20",
       textNavbar: "text-white hover:text-purple-600 transition-colors",
+      textSelect: "text-white hover:bg-blue-700 hover:text-white",
     },
   },
   auto: {
@@ -54,6 +56,7 @@ export const themes = {
       textSee: "text-white hover:text-gray-900",
       shadow: "shadow-sm dark:shadow-lg dark:shadow-black/20",
       textNavbar: "text-white hover:text-purple-600 transition-colors",
+      textSelect: "text-gray-900 hover:bg-blue-600",
     },
   },
   highContrast: {
@@ -72,6 +75,7 @@ export const themes = {
       textSee: "text-gray-900 hover:text-white",
       shadow: "shadow-xl shadow-gray-500/50",
       textNavbar: "text-gray-900 hover:text-purple-600 transition-colors",
+      textSelect: "text-gray-900 hover:bg-yellow-300 hover:text-white",
     },
   },
 };

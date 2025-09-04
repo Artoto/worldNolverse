@@ -45,7 +45,7 @@ const ThemeSelector = () => {
                   className={`w-full flex items-center gap-3 px-3 py-2 rounded-md transition-colors ${
                     isActive
                       ? `${currentColors.accent} text-white`
-                      : `${currentColors.text} hover:bg-gray-100 dark:hover:bg-gray-700`
+                      : `${currentColors.textSelect}`
                   }`}
                 >
                   <Icon size={16} />
